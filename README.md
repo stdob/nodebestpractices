@@ -9,7 +9,7 @@
 <br/>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/⚙%20Item%20count%20-%2073%20Best%20practices-blue.svg" alt="73 items"> <img src="https://img.shields.io/badge/%F0%9F%93%85%20Last%20update%20-%20September%209%202018-green.svg" alt="Last update: September 9th, 2018"> <img src="https://img.shields.io/badge/%E2%9C%94%20Updated%20For%20Version%20-%20Node%208.11.3%20LTS-brightgreen.svg" alt="Updated for Node 8.11.3 LTS">
+  <img src="https://img.shields.io/badge/⚙%20Item%20count%20-%2079%20Best%20practices-blue.svg" alt="79 items"> <img src="https://img.shields.io/badge/%F0%9F%93%85%20Last%20update%20-%20Nov%2014%202018-green.svg" alt="Last update: November 14th, 2018"> <img src="https://img.shields.io/badge/%E2%9C%94%20Updated%20For%20Version%20-%20Node%2010.13.0%20LTS-brightgreen.svg" alt="Updated for Node 10.13.0 LTS">
 </div>
 
 <br/>
@@ -18,7 +18,7 @@
 
 <br/>
 
-Read in a different language: [![CN](/assets/flags/CN.png)**CN**](/README.chinese.md) [(![ES](/assets/flags/ES.png)**ES**, ![FR](/assets/flags/FR.png)**FR**, ![HE](/assets/flags/HE.png)**HE**, ![KR](/assets/flags/KR.png)**KR**, ![RU](/assets/flags/RU.png)**RU** and ![TR](/assets/flags/TR.png)**TR** in progress!)](#translations)
+Read in a different language: [![CN](/assets/flags/CN.png)**CN**](/README.chinese.md) [(![BR](/assets/flags/BR.png)**BR**, ![ES](/assets/flags/ES.png)**ES**, ![FR](/assets/flags/FR.png)**FR**, ![HE](/assets/flags/HE.png)**HE**, ![KR](/assets/flags/KR.png)**KR**, ![RU](/assets/flags/RU.png)**RU** and ![TR](/assets/flags/TR.png)**TR** in progress!)](#translations)
 
 <br/>
 
@@ -37,10 +37,10 @@ Read in a different language: [![CN](/assets/flags/CN.png)**CN**](/README.chines
 1.  [Project structure Practices (5)](#1-project-structure-practices)
 2.  [Error Handling Practices (11) ](#2-error-handling-practices)
 3.  [Code Style Practices (12) ](#3-code-style-practices)
-4.  [Testing And Overall Quality Practices (8) ](#4-testing-and-overall-quality-practices)
-5.  [Going To Production Practices (17) ](#5-going-to-production-practices)
-6.  :star: New: [Security Practices (23)](#6-security-best-practices)
-7.  Performance Practices ([coming soon](https://github.com/i0natan/nodebestpractices/milestones?direction=asc&sort=due_date&state=open))
+4.  [Testing And Overall Quality Practices (9) ](#4-testing-and-overall-quality-practices)
+5.  [Going To Production Practices (18) ](#5-going-to-production-practices)
+6.  [Security Practices (24)](#6-security-best-practices)
+7.  [Performance Practices (in progress)](#7-performance-best-practices)
 
 <br/><br/><br/>
 
@@ -431,7 +431,7 @@ All statements above will return false if used with `===`
 
 ## ![✔] 4.4 Constantly inspect for vulnerable dependencies
 
-**TL;DR:** Even the most reputable dependencies such as Express have known vulnerabilities. This can get easily tamed using community and commercial tools such as 🔗 [nsp](https://github.com/nodesecurity/nsp) that can be invoked from your CI on every build
+**TL;DR:** Even the most reputable dependencies such as Express have known vulnerabilities. This can get easily tamed using community and commercial tools such as 🔗 [npm audit](https://docs.npmjs.com/cli/audit) and 🔗 [snyk.io](https://snyk.io) that can be invoked from your CI on every build
 
 **Otherwise:** Keeping your code clean from vulnerabilities without dedicated tools will require to constantly follow online publications about new threats. Quite tedious
 
@@ -648,6 +648,16 @@ All statements above will return false if used with `===`
 **Otherwise:** Newly discovered bugs or vulnerabilities could be used to exploit an application running in production, and your application may become unsupported by various modules and harder to maintain
 
 🔗 [**Read More: Use an LTS release of Node.js**](/sections/production/LTSrelease.md)
+
+<br/><br/>
+
+## ![✔] 5.18. Don't route logs within the app
+
+**TL;DR:** Log destinations should not be hard-coded by developers within the application code, but instead should be defined by the execution environment the application runs in. Developers should write logs to `stdout` using a logger utility and then let the execution environment (container, server, etc.) pipe the `stdout` stream to the appropriate destination (i.e. Splunk, Graylog, ElasticSearch, etc.).
+
+**Otherwise:** Application handling log routing === hard to scale, loss of logs, poor separation of concerns
+
+🔗 [**Read More: Log Routing**](/sections/production/logrouting.md)
 
 <br/><br/><br/>
 
@@ -925,17 +935,25 @@ All statements above will return false if used with `===`
 
 **Otherwise:** This is just an educated guess: given many Node.js applications, if we try passing an empty JSON body to all POST requests - a handful of applications will crash. At that point, we can just repeat sending the same request to take down the applications with ease
 
+<br/><br/>
+
+## ![✔] 6.24. Prevent unsafe redirects
+
+<a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
+
+**TL;DR:** Redirects that do not validate user input can enable attackers to launch phishing scams, steal user credentials, and perform other malicious actions.
+
+**Otherwise:** If an attacker discovers that you are not validating external, user-supplied input, they may exploit this vulnerability by posting specially-crafted links on forums, social media, and other public places to get users to click it.
+
+🔗 [**Read More: Prevent unsafe redirects**](/sections/security/saferedirects.md)
+
 <br/><br/><br/>
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `API Practices`
+# `7. Performance Best Practices`
 
-## Our contributors are working on this section. Would you like to join?
-
-# `Performance Practices`
-
-## Our contributors are working on this section. Would you like to join?
+## Our contributors are working on this section. [Would you like to join?](https://github.com/i0natan/nodebestpractices/issues/256)
 
 <br/><br/><br/>
 
@@ -964,7 +982,7 @@ All translations are contributed by the community. We will be happy to get any h
 
 <br/><br/><br/>
 
-# Contributors
+# Core Contributors
 
 ## `Yoni Goldberg`
 
@@ -986,6 +1004,12 @@ Node.js Core Collaborator, been noding since 0.4, and have noded in multiple pro
 ## `Kyle Martin` [@js-kyle](https://github.com/js-kyle)
 
 Full Stack Developer based in New Zealand, interested in architecting and building Node.js applications to perform at global scale. Keen contributor to open source software, including Node.js Core.
+
+## `Sagir Khan`
+
+Deep specialist in JavaScript and its ecosystem — React, Node.js, MongoDB, pretty much anything that involves using JavaScript/JSON in any layer of the system — building products using the web platform for the world’s most recognized brands. Individual Member of the Node.js Foundation, collaborating on the Community Committee's Website Redesign Initiative.
+
+Social: gh. [sagirk](https://github.com/sagirk) | t. [@sagir_k](https://twitter.com/sagir_k) | li. [sagirk](https://linkedin.com/in/sagirk) | w. [sagirk.com](https://sagirk.com/)
 
 <br/><br/><br/>
 
@@ -1043,10 +1067,16 @@ This repository is being kept up to date thanks to the help from the community. 
 🌻 [Gabe Kuslansky](https://github.com/GabeKuslansky),
 🌻 [Ron Gross](https://github.com/ripper234),
 🌻 [Valeri Karpov](https://github.com/vkarpov15)
+🌻 [Sergio](https://github.com/imsergiobernal),
+🌻 [Duarte Mendes](https://github.com/duartemendes),
+🌻 [Nikola Telkedzhiev](https://github.com/ntelkedzhiev),
+🌻 [Vitor Godoy](https://github.com/vitordagamagodoy),
+🌻 [Manish Saraan](https://github.com/manishsaraan),
+🌻 [Sangbeom Han](https://github.com/uronly14me)
 
 ### Stars <br/>
 
-⭐ [Kyle Martin](https://github.com/js-kyle)
+⭐ [Kyle Martin](https://github.com/js-kyle),
 ⭐ [Keith Holliday](https://github.com/TheHollidayInn)
 
 <br/><br/><br/>
